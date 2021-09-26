@@ -1,7 +1,7 @@
 # Project description
 
 Application was created with [create-react-app](https://github.com/facebook/create-react-app) as test task for recruitment process purpose.
-App has been build using React Hooks and styles using styled-components.
+App has been build using React Hooks and styled using styled-components.
 
 # DEMO
 
