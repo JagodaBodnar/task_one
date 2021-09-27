@@ -16,3 +16,8 @@ export const StyledChevronDown = styled(TiArrowSortedDown)`
   color: ${({ theme }) => theme.darkGray};
   width: 18px;
 `;
+
+export const StyledProfile = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

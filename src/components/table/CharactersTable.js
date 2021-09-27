@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TableCell from "../common/table/cell/Cell";
 import TableHeader from "../common/table/header/Header";
 import TableRow from "../common/table/row/Row";
 import Table from "../common/table/Table";
+import TableContent from "./TableContent";
 
-import { StyledChevronUp, StyledChevronDown } from "./CharacterTableStyles";
+import {
+  StyledChevronUp,
+  StyledChevronDown,
+  StyledProfile,
+} from "./CharacterTableStyles";
+import Checkbox from "../inputs/Checkbox";
 
-const CharactersTable = () => {
+const CharactersTable = ({ characters }) => {
   const headers = [
     "Name",
     "Born",
@@ -14,38 +20,12 @@ const CharactersTable = () => {
     "Vehicles and Starships",
     "Status",
   ];
-  const data = [
-    {
-      name: "Luke Skywalker",
-      type: "Human",
-      born: "19BBY",
-      homeworld: "Tatooine",
-      vehicles: "Snowspeeder",
-      status: "active",
-      actions: "actions",
-    },
-    {
-      name: "Luke Skywalker",
-      type: "Human",
-      born: "19BBY",
-      homeworld: "Tatooine",
-      vehicles: "Snowspeeder",
-      status: "active",
-      actions: "actions",
-    },
-    {
-      name: "Luke Skywalker",
-      type: "Human",
-      born: "19BBY",
-      homeworld: "Tatooine",
-      vehicles: "Snowspeeder",
-      status: "active",
-      actions: "actions",
-    },
-  ];
   return (
     <Table>
       <TableRow>
+        <TableHeader>
+          <Checkbox />
+        </TableHeader>
         {headers.map((header) => (
           <>
             <TableHeader>
@@ -57,15 +37,8 @@ const CharactersTable = () => {
         ))}
         <TableHeader>Actions</TableHeader>
       </TableRow>
-      {data.map((data) => (
-        <TableRow>
-          <TableCell>{data.name}</TableCell>
-          <TableCell>{data.type}</TableCell>
-          <TableCell>{data.homeworld}</TableCell>
-          <TableCell>{data.vehicles}</TableCell>
-          <TableCell>{data.status}</TableCell>
-          <TableCell></TableCell>
-        </TableRow>
+      {characters.map((data) => (
+        <TableContent key={data.name} data={data} />
       ))}
     </Table>
   );
