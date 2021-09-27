@@ -54,9 +54,8 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
     setPaginationDisplay([...paginationDisplayArray]);
   };
 
-  useEffect(() => {
-    setPaginationVisibility();
-  }, [paginate]);
+  useEffect(() => setPaginationVisibility(), [paginate]);
+
   return (
     <>
       <StyledPagination>
