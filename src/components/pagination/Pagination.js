@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import React, { useState, useEffect } from "react";
 import {
   StyledPageNumber,
   StyledPagination,
@@ -51,10 +50,10 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
       }
       console.log(currentPage, pageNumbers.length, paginationDisplayArray);
     }
-    setPaginationDisplay([...paginationDisplayArray]);
+    return setPaginationDisplay([...paginationDisplayArray]);
   };
 
-  useEffect(() => setPaginationVisibility, [paginate]);
+  useEffect(() => setPaginationVisibility(), [paginate]);
 
   return (
     <>
