@@ -1,11 +1,11 @@
 # Project description
 
 Application was created with [create-react-app](https://github.com/facebook/create-react-app) as test task for recruitment process purpose.
-App has been build using React Hooks and styled using styled-components.
+App has been build using React Hooks and styled using styled-components. Data provided in the application has been fetched from [API](https://swapi.dev/)
 
 # DEMO
 
-[Visualisation of the application](https://here_will_be_link_)
+[Visualisation of the application](https://youthful-johnson-e743f3.netlify.app/)
 
 ## Available Scripts
 
