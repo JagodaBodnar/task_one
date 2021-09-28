@@ -8,7 +8,6 @@ import Checkbox from "../inputs/Checkbox";
 import Spinner from "../spinner/Spinner";
 
 const CharactersTable = ({ characters, checked, handleCheckboxChange }) => {
-  console.log(characters);
   const headers = [
     "Name",
     "Born",
