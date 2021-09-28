@@ -11,4 +11,5 @@ export const globalStyles = {
   activeGreen: "#03A99F",
   deactiveGray: "#949EAE",
   iconGray: "#707D93",
+  primaryRed: "#BC2626",
 };

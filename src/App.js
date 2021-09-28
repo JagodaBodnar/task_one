@@ -7,6 +7,7 @@ import MainHeader from "./components/main_header/MainHeader";
 import Pagination from "./components/pagination/Pagination.js";
 import SearchInput from "./components/inputs/SearchInput.js";
 import CharactersTable from "./components/table/CharactersTable.js";
+import Button from "./components/button/Button.js";
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -15,41 +16,90 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostsPerPage] = useState(6);
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
 
-  async function fetchingHomeworld(url) {
-    const checkStatus = (res) =>
-      res.ok ? Promise.resolve(res) : Promise.reject(new Error(res.statusText));
-    const parseJSON = (response) => response.json();
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
 
-    const getPage = (url) =>
-      fetch(url)
-        .then(checkStatus)
-        .then(parseJSON)
-        .catch((error) => console.log("There was a problem!", error));
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
 
-    const results = await getPage(url).then((result) => result.name);
-    return results;
+    return array;
   }
+
+  // async function fetchingHomeworld(url) {
+  //   const checkStatus = (res) =>
+  //     res.ok ? Promise.resolve(res) : Promise.reject(new Error(res.statusText));
+  //   const parseJSON = (response) => response.json();
+
+  //   const getPage = (url) =>
+  //     fetch(url)
+  //       .then(checkStatus)
+  //       .then(parseJSON)
+  //       .catch((error) => console.log("There was a problem!", error));
+
+  //   const results = await getPage(url).then((result) => result.name);
+  //   return results;
+  // }
 
   async function fetchCharacters() {
     const response = await fetch(`https://swapi.dev/api/people/`);
     const data = await response.json();
 
     const transformedCharacters = await data.results.map((charactersData) => {
+      const vehiclesAndStarships = shuffle([
+        ...charactersData.vehicles,
+        ...charactersData.starships,
+      ]);
       return {
         name: charactersData.name,
         species: charactersData.species,
         born: charactersData.birth_year,
         homeworld: charactersData.homeworld,
-        vehicles: charactersData.vehicles,
+        vehicles: [vehiclesAndStarships[0], vehiclesAndStarships[1]],
         status: true,
         checked: checked,
       };
     });
-    console.log(transformedCharacters);
     setCharacters(transformedCharacters);
   }
+  // async function fetchSearchCharacters() {
+  //   const response = await fetch(
+  //     `https://swapi.dev/api/people/?search=${search}`
+  //   );
+  //   const data = await response.json();
+
+  //   const transformedCharacters = await data.results.map((charactersData) => {
+  //     const vehiclesAndStarships = shuffle([
+  //       ...charactersData.vehicles,
+  //       ...charactersData.starships,
+  //     ]);
+  //     return {
+  //       name: charactersData.name,
+  //       species: charactersData.species,
+  //       born: charactersData.birth_year,
+  //       homeworld: charactersData.homeworld,
+  //       vehicles: [vehiclesAndStarships[0], vehiclesAndStarships[1]],
+  //       status: true,
+  //       checked: checked,
+  //     };
+  //   });
+  //   console.log(transformedCharacters);
+  //   setCharacters([transformedCharacters]);
+  // }
   useEffect(() => fetchCharacters(), []);
+  // useEffect(() => {
+  //   const cleanUp = setTimeout(() => fetchSearchCharacters(), 500);
+  //   return () => {
+  //     clearTimeout(cleanUp);
+  //   };
+  // }, [search]);
   // const getData = async () => {
   //   const data = await axios({
   //     method: "get",
@@ -147,6 +197,8 @@ function App() {
     <ThemeProvider theme={globalStyles}>
       <StyledApp>
         <MainHeader>Characters</MainHeader>
+        <Button deactivate>Deactivate characters</Button>
+        <Button remove>Remove characters</Button>
         <SearchInput search={search} onSearch={onSearch} />
         <CharactersTable
           characters={characters}
