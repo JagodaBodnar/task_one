@@ -3,16 +3,18 @@ import styled, { css } from "styled-components";
 const Button = styled.button`
   color: ${({ theme }) => theme.white};
   font-family: inherit;
-  width: 170px;
   border-radius: 5px;
   min-height: 40px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 1px;
   cursor: pointer;
   border: none;
-  &::before {
-  }
+  align-self: flex-end;
+  justify-content: space-around;
+  display: flex;
+  align-items: center;
+  max-width: 170px;
   ${({ deactivate }) =>
     deactivate &&
     css`

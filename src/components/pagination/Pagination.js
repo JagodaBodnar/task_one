@@ -67,7 +67,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
         </StyledPageNumber>
         {paginationDisplay.map((page) =>
           page === 0 ? (
-            <StyledPaginationDots>...</StyledPaginationDots>
+            <StyledPaginationDots key={page}>...</StyledPaginationDots>
           ) : (
             <StyledPageNumber
               key={page}
