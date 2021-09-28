@@ -7,7 +7,6 @@ import {
 } from "./SearchInputStyles";
 
 const SearchInput = ({ search, onSearch }) => {
-  console.log(search);
   return (
     <StyledSearchContainer>
       <StyledSearchInput

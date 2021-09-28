@@ -8,4 +8,7 @@ export const globalStyles = {
   paginationBorder: "#BAC6D8",
   fontColor: "#484F53",
   primaryBackground: "#EEF1F5",
+  activeGreen: "#03A99F",
+  deactiveGray: "#949EAE",
+  iconGray: "#707D93",
 };
