@@ -1,55 +1,87 @@
 import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { StyledApp } from "./AppStyles.js";
-import axios from "axios";
 import { globalStyles } from "./assets/styles/globalStyles";
 import MainHeader from "./components/main_header/MainHeader";
 import Pagination from "./components/pagination/Pagination.js";
-import SearchInput from "./components/inputs/SearchInput.js";
 import CharactersTable from "./components/table/CharactersTable.js";
+import TableNavigation from "./components/table-nav/TableNavigation.js";
 
 function App() {
   const [characters, setCharacters] = useState([]);
+  const [people, setPeople] = useState([]);
   const [checked, setChecked] = useState(false);
   const [search, setSearch] = useState();
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostsPerPage] = useState(6);
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
 
-  async function fetchingHomeworld(url) {
-    const checkStatus = (res) =>
-      res.ok ? Promise.resolve(res) : Promise.reject(new Error(res.statusText));
-    const parseJSON = (response) => response.json();
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
 
-    const getPage = (url) =>
-      fetch(url)
-        .then(checkStatus)
-        .then(parseJSON)
-        .catch((error) => console.log("There was a problem!", error));
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
 
-    const results = await getPage(url).then((result) => result.name);
-    return results;
+    return array;
   }
 
-  async function fetchCharacters() {
-    const response = await fetch(`https://swapi.dev/api/people/`);
-    const data = await response.json();
+  // async function fetchingHomeworld(url) {
+  //   const checkStatus = (res) =>
+  //     res.ok ? Promise.resolve(res) : Promise.reject(new Error(res.statusText));
+  //   const parseJSON = (response) => response.json();
 
-    const transformedCharacters = await data.results.map((charactersData) => {
-      return {
-        name: charactersData.name,
-        species: charactersData.species,
-        born: charactersData.birth_year,
-        homeworld: charactersData.homeworld,
-        vehicles: charactersData.vehicles,
-        status: true,
-        checked: checked,
-      };
-    });
-    console.log(transformedCharacters);
-    setCharacters(transformedCharacters);
-  }
-  useEffect(() => fetchCharacters(), []);
+  //   const getPage = (url) =>
+  //     fetch(url)
+  //       .then(checkStatus)
+  //       .then(parseJSON)
+  //       .catch((error) => console.log("There was a problem!", error));
+
+  //   const results = await getPage(url).then((result) => result.name);
+  //   return results;
+  // }
+
+  // function getHomeworld(url) {
+  //   fetch(url)
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       data.results.map((charactersData) => {
+  //         fetch(`${charactersData.homeworld}`)
+  //           .then((response) => response.json())
+  //           .then((data) => {
+  //             return data;
+  //           })
+  //           .then((response) => {
+  //             setPeople((prev) => [
+  //               ...prev,
+  //               {
+  //                 name: charactersData.name,
+  //                 species: charactersData.species,
+  //                 born: charactersData.birth_year,
+  //                 homeworld: response.name,
+  //                 active: true,
+  //               },
+  //             ]);
+  //           });
+  //       });
+  //     });
+  // }
+  // useEffect(() => fetchCharacters(), []);
+
+  // useEffect(() => {
+  //   const cleanUp = setTimeout(() => fetchSearchCharacters(), 500);
+  //   return () => {
+  //     clearTimeout(cleanUp);
+  //   };
+  // }, [search]);
   // const getData = async () => {
   //   const data = await axios({
   //     method: "get",
@@ -77,69 +109,95 @@ function App() {
   //   return setCharacters(thirdResponse);
   // };
 
-  // const getData = async (urls) => {
-  //   const checkStatus = (res) =>
-  //     res.ok ? Promise.resolve(res) : Promise.reject(new Error(res.statusText));
-  //   const parseJSON = (response) => response.json();
+  const getData = async (urls) => {
+    const checkStatus = (res) =>
+      res.ok ? Promise.resolve(res) : Promise.reject("Unspecified");
 
-  //   const getPage = (url) =>
-  //     fetch(url)
-  //       .then(checkStatus)
-  //       .then(parseJSON)
-  //       .catch((error) => console.log("There was a problem!", error));
+    const parseJSON = (response) => response.json();
 
-  //   const getAllPages = async (url, collection = []) => {
-  //     const { results, next } = await getPage(url);
-  //     collection = [...collection, ...results];
-  //     if (next !== null) {
-  //       return getAllPages(next, collection);
-  //     }
-  //     console.log(collection);
-  //     collection.forEach((item) =>
-  //       item.species.length === 0
-  //         ? (item.species = "Unspecified")
-  //         : getPage(`${item.species}`).then(
-  //             (response) => (item.species = response.name)
-  //           )
-  //     );
-  //     return collection;
-  //   };
+    // const getHomeworld = (charactersData, item) => {
+    //   fetch(`${charactersData}`)
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       return data;
+    //     })
+    //     .then((response) => {
+    //       console.log({
+    //         name: item.name,
+    //         species: item.species,
+    //         born: item.birth_year,
+    //         homeworld: response.name,
+    //         active: true,
+    //       });
+    //     });
+    // };
+    const getPage = (url) =>
+      fetch(url)
+        .then(checkStatus)
+        .then(parseJSON)
+        .catch((error) => console.log("There was a problem!", error));
 
-  //   const [people] = await Promise.all(urls.map((url) => getAllPages(url)));
+    const getAllPages = async (url, collection = []) => {
+      const { results, next } = await getPage(url);
 
-  //   setCharacters(people);
-  // };
+      collection = [...collection, ...results];
+      if (next !== null) {
+        return getAllPages(next, collection);
+      }
 
-  // const getStarWarsCharacters = () => {
-  //   const urls = [`https://swapi.dev/api/people/`];
-  //   getData(urls);
-  // };
-  // const getSearchedCharacter = () => {
-  //   const urls = [`https://swapi.dev/api/people/?search=${search}`];
-  //   getData(urls);
-  //   setTimeout(() => setCurrentPage(1), 1000);
-  // };
+      return collection;
+    };
+
+    const [peoples] = await Promise.all(urls.map((url) => getAllPages(url)));
+    const homeworldUrl = peoples.map((item) => {
+      getPage(`${item.homeworld}`).then((response) => {
+        setPeople((prevState) => [
+          ...prevState,
+          {
+            name: item.name,
+            born: item.birth_year,
+            homeworld: response.name,
+            status: true,
+          },
+        ]);
+      });
+    });
+    const awainingHomeworld = await homeworldUrl;
+  };
+
+  const getStarWarsCharacters = () => {
+    const urls = [`https://swapi.dev/api/people/`];
+    getData(urls);
+  };
+  const getSearchedCharacter = () => {
+    const urls = [`https://swapi.dev/api/people/?search=${search}`];
+    getData(urls);
+    setTimeout(() => setCurrentPage(1), 1000);
+  };
 
   const onSearch = (event) => {
     setSearch(event.target.value);
   };
 
-  // const paginate = (pageNumber) => {
-  //   setCurrentPage(pageNumber);
-  // };
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-  // useEffect(() => getStarWarsCharacters(), []);
-  // useEffect(() => {
-  //   const cleanUp = setTimeout(() => getSearchedCharacter(), 500);
-  //   return () => {
-  //     clearTimeout(cleanUp);
-  //   };
-  // }, [search]);
-  // const indexOfLastPost = currentPage * postPerPage;
-  // const indexOfFirstPost = indexOfLastPost - postPerPage;
-  if (characters.length === 0) {
-    return "loading";
-  }
+  useEffect(() => {
+    getStarWarsCharacters();
+  }, []);
+  useEffect(() => {
+    setCharacters([]);
+    const cleanUp = setTimeout(() => getSearchedCharacter(), 500);
+    return () => {
+      clearTimeout(cleanUp);
+    };
+  }, [search]);
+
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+  const currentPosts = people.slice(indexOfFirstPost, indexOfLastPost);
+  console.log(currentPosts, people);
   const checkedChange = (check) => {
     setChecked(check);
   };
@@ -147,18 +205,18 @@ function App() {
     <ThemeProvider theme={globalStyles}>
       <StyledApp>
         <MainHeader>Characters</MainHeader>
-        <SearchInput search={search} onSearch={onSearch} />
+        <TableNavigation search={search} onSearch={onSearch} />
         <CharactersTable
-          characters={characters}
+          characters={currentPosts}
           checked={checked}
           checkedChange={checkedChange}
         ></CharactersTable>
-        {/* <Pagination
+        <Pagination
           postsPerPage={postPerPage}
-          totalPosts={characters.length}
+          totalPosts={people.length}
           paginate={paginate}
           currentPage={currentPage}
-        /> */}
+        />
       </StyledApp>
     </ThemeProvider>
   );

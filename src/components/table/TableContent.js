@@ -13,8 +13,6 @@ import {
 } from "./CharacterTableStyles";
 
 const TableContent = ({ data }) => {
-  console.log(data);
-
   return (
     <>
       <TableRow>
@@ -31,7 +29,7 @@ const TableContent = ({ data }) => {
             <span>{data.species}</span>
           </StyledProfile>
         </TableCell>
-        <TableCell>{data.birth_year}</TableCell>
+        <TableCell>{data.born}</TableCell>
         <TableCell>{data.homeworld}</TableCell>
         <TableCell>{data.vehicles}</TableCell>
         <TableCell>

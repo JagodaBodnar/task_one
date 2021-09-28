@@ -4,6 +4,7 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 import { RiIndeterminateCircleFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
+
 export const StyledChevronUp = styled(TiArrowSortedUp)`
   position: absolute;
   top: 20%;

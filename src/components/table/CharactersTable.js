@@ -5,8 +5,10 @@ import Table from "../common/table/Table";
 import TableContent from "./TableContent";
 import { StyledChevronUp, StyledChevronDown } from "./CharacterTableStyles";
 import Checkbox from "../inputs/Checkbox";
+import Spinner from "../spinner/Spinner";
 
 const CharactersTable = ({ characters, checked, handleCheckboxChange }) => {
+  console.log(characters);
   const headers = [
     "Name",
     "Born",
@@ -25,20 +27,22 @@ const CharactersTable = ({ characters, checked, handleCheckboxChange }) => {
             onClick={() => handleCheckboxChange()}
           />
         </TableHeader>
-        {headers.map((header) => (
-          <>
-            <TableHeader>
-              {header}
-              <StyledChevronUp />
-              <StyledChevronDown />
-            </TableHeader>
-          </>
+        {headers.map((header, index) => (
+          <TableHeader key={index}>
+            {header}
+            <StyledChevronUp />
+            <StyledChevronDown />
+          </TableHeader>
         ))}
         <TableHeader>Actions</TableHeader>
       </TableRow>
-      {characters.map((data) => {
-        return <TableContent key={data.name} data={data} />;
-      })}
+      {characters.length === 0 ? (
+        <Spinner />
+      ) : (
+        characters.map((data, index) => {
+          return <TableContent key={index} data={data} />;
+        })
+      )}
     </Table>
   );
 };
