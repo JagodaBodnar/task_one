@@ -17,7 +17,6 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
   }
   const setPaginationVisibility = () => {
     for (let i = currentPage; i < currentPage + 1; i++) {
-      console.log(currentPage, paginationDisplayArray);
       if (pageNumbers.length < 6) {
         paginationDisplayArray.push(...pageNumbers);
       } else {
@@ -48,7 +47,6 @@ const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
           paginationDisplayArray.push(...pageNumbers.slice(-4));
         }
       }
-      console.log(currentPage, pageNumbers.length, paginationDisplayArray);
     }
     return setPaginationDisplay([...paginationDisplayArray]);
   };
