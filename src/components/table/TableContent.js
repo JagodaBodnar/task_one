@@ -19,7 +19,6 @@ const TableContent = ({ data }) => {
         <TableCell>
           {/* <Checkbox
             checked={data.checked}
-            onClick={(event) => console.log(event.target.checked)}
           /> */}
           <input type="checkbox" />
         </TableCell>
@@ -29,7 +28,7 @@ const TableContent = ({ data }) => {
             <span>{data.species}</span>
           </StyledProfile>
         </TableCell>
-        <TableCell>{data.born}</TableCell>
+        <TableCell>{data.birth_year}</TableCell>
         <TableCell>{data.homeworld}</TableCell>
         <TableCell>{data.vehicles}</TableCell>
         <TableCell>
