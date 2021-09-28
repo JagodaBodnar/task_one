@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from "react";
-import TableCell from "../common/table/cell/Cell";
+import React from "react";
 import TableHeader from "../common/table/header/Header";
 import TableRow from "../common/table/row/Row";
 import Table from "../common/table/Table";
 import TableContent from "./TableContent";
-
-import {
-  StyledChevronUp,
-  StyledChevronDown,
-  StyledProfile,
-} from "./CharacterTableStyles";
+import { StyledChevronUp, StyledChevronDown } from "./CharacterTableStyles";
 import Checkbox from "../inputs/Checkbox";
 
-const CharactersTable = ({ characters }) => {
+const CharactersTable = ({ characters, checked, handleCheckboxChange }) => {
   const headers = [
     "Name",
     "Born",
@@ -24,7 +18,12 @@ const CharactersTable = ({ characters }) => {
     <Table>
       <TableRow>
         <TableHeader>
-          <Checkbox />
+          {/* <Checkbox onChange={() => checkedChange(!checked)} /> */}
+          <input
+            type="checkbox"
+            defaultChecked={checked}
+            onClick={() => handleCheckboxChange()}
+          />
         </TableHeader>
         {headers.map((header) => (
           <>
@@ -37,9 +36,9 @@ const CharactersTable = ({ characters }) => {
         ))}
         <TableHeader>Actions</TableHeader>
       </TableRow>
-      {characters.map((data) => (
-        <TableContent key={data.name} data={data} />
-      ))}
+      {characters.map((data) => {
+        return <TableContent key={data.name} data={data} />;
+      })}
     </Table>
   );
 };
