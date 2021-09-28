@@ -19,7 +19,6 @@ const TableContent = ({ data }) => {
         <TableCell>
           {/* <Checkbox
             checked={data.checked}
-            onClick={(event) => console.log(event.target.checked)}
           /> */}
           <input type="checkbox" />
         </TableCell>
