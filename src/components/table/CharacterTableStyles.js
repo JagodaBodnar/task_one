@@ -1,25 +1,8 @@
 import styled from "styled-components";
-import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { RiIndeterminateCircleFill } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-
-export const StyledChevronUp = styled(TiArrowSortedUp)`
-  position: absolute;
-  top: 20%;
-  right: 20%;
-  color: ${({ theme }) => theme.lightGray};
-  width: 18px;
-`;
-
-export const StyledChevronDown = styled(TiArrowSortedDown)`
-  position: absolute;
-  top: 40%;
-  right: 20%;
-  color: ${({ theme }) => theme.darkGray};
-  width: 18px;
-`;
 
 export const StyledProfile = styled.div`
   display: flex;

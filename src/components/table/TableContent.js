@@ -17,10 +17,7 @@ const TableContent = ({ data }) => {
     <>
       <TableRow>
         <TableCell>
-          {/* <Checkbox
-            checked={data.checked}
-          /> */}
-          <input type="checkbox" />
+          <Checkbox />
         </TableCell>
         <TableCell>
           <StyledProfile>

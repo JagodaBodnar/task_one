@@ -6,7 +6,8 @@ export const StyledSpinner = styled.div`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  position: relative;
+  position: absolute;
+  left: 50%;
   text-indent: -9999em;
   -webkit-animation: load5 1.1s infinite ease;
   animation: load5 1.1s infinite ease;
